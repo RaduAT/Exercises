@@ -1,0 +1,477 @@
+#include <iostream>
+#include <string>
+#include <limits>
+#include <math.h>
+#include <iomanip>
+
+
+//Clasa de Baza
+class Angajat{
+    
+    //Date membre
+    protected:
+        std::string nume;
+        std::string functie;
+        float salariu_baza;
+        float procent_taxe_salariu;
+        
+        
+    //Constructor
+    public:
+        
+        //Constructor Gol
+        Angajat(){}
+        
+        //Constructor cu Lista de Initializare
+        Angajat(std::string nume, float salariu_baza, std::string functie, float procent_taxe_salariu): nume(nume), salariu_baza(salariu_baza), functie(functie), procent_taxe_salariu(procent_taxe_salariu){}
+        
+        
+    //Functii
+    public:
+    
+       
+        //Setters si Getters
+        virtual float get_salariu_net(float x){return 0;}
+        virtual float get_salariu_brut(){return 0;}
+        virtual std::string get_nume(){return nume;}
+        virtual std::string get_functie(){return functie;}
+        
+        virtual void set_functie(std::string functie_noua){this->functie = functie_noua;}
+        
+        
+        //Alte Functii
+        virtual void afisare_1(){}
+        virtual void calcul_salarii_2(){}
+        
+        virtual void marire_salariu_3(float x){}
+
+        //Destructor
+        virtual ~Angajat(){std::cout<<"Destructor Angajat"<<std::endl;}
+};
+
+
+//Clasa Derivata 1 din Baza
+class Analist: public Angajat{
+    
+    //Date membre:
+    protected:
+    
+    //Constructor
+    public:
+        
+        //Constructor Gol
+        Analist(){}
+        
+        //Constructor cu Lista de Initializare
+        Analist(std::string nume, float salariu_baza, std::string functie, float procent_taxe_salariu): Angajat(nume, salariu_baza, functie, procent_taxe_salariu){}
+    
+    
+    //Functii
+    public:
+    
+        //Setters si Getters
+        
+        
+        //Alte Functii
+        void afisare_1(){std::cout<<nume<<"\n"<<functie<<std::endl;}
+        
+        void calcul_salarii_2(){
+            
+            int salariu_brut;
+            int salariu_net;
+            
+            salariu_brut = salariu_baza;
+            salariu_net = (salariu_baza*(100-40))/100;
+            
+            std::cout<<nume<<std::endl;
+            std::cout<<"Salariu brut: "<< salariu_brut<<std::endl;
+            std::cout<<"Salariu Net: "<< salariu_net<<std::endl;
+            
+        }
+        
+        void marire_salariu_3(float x){
+            
+            int salariu_vechi;
+            int salariu_nou;
+            
+            salariu_vechi=salariu_baza;
+            salariu_nou=salariu_baza+salariu_baza*x/100;
+        
+            std::cout<<nume<<std::endl;
+            std::cout<<"Salariu de baza vechi: "<< salariu_vechi<<std::endl;
+            std::cout<<"Salariu de baza nou: "<< salariu_nou<<std::endl;
+
+        }
+        
+        
+        //Destructor
+        ~Analist(){std::cout<<"Destructor Analist"<<std::endl;}
+    
+};
+
+
+
+//Clasa Derivata 2 din Derivata 1
+class Programator: public Analist{
+    
+    //Date membre
+    protected: 
+        float procent_deducere_salariu_it;
+        
+        
+    //Constructor
+    public:
+        
+        //Constructor Gol
+        Programator(){}
+        
+        //Constructor cu Lista de Initializare
+        Programator(std::string nume, float salariu_baza, std::string functie, float procent_taxe_salariu, float procent_deducere_salariu_it): Analist(nume, salariu_baza, functie, procent_taxe_salariu), procent_deducere_salariu_it(procent_deducere_salariu_it){}   
+        
+        
+        
+    //Functii    
+    public:
+    
+        //Setters si Getters
+        
+        
+        //Alte Functii
+        void afisare_1(){std::cout<<nume<<"\n"<<functie<<std::endl;}
+        
+        void calcul_salarii_2(){
+            
+            int salariu_brut;
+            int salariu_net;
+            
+            salariu_brut = salariu_baza;
+            salariu_net = (salariu_baza*(100-40+10))/100;
+            
+            std::cout<<nume<<std::endl;
+            std::cout<<"Salariu brut: "<< salariu_brut<<std::endl;
+            std::cout<<"Salariu Net: "<< salariu_net<<std::endl;
+            
+        }
+        
+        
+        void marire_salariu_3(float x){
+            
+            int salariu_vechi;
+            int salariu_nou;
+            
+            salariu_vechi=salariu_baza;
+            salariu_nou=salariu_baza+salariu_baza*x/100;
+        
+            std::cout<<nume<<std::endl;
+            std::cout<<"Salariu de baza vechi: "<< salariu_vechi<<std::endl;
+            std::cout<<"Salariu de baza nou: "<< salariu_nou<<std::endl;
+
+        }
+    
+        //Destructor
+        ~Programator(){std::cout<<"Destructor Programator"<<std::endl;}
+    
+        
+};
+
+
+
+//Clasa Derivata 3 din Derivata 2
+class LiderEchipaProgramare: public Programator{
+    
+    //Date membre
+    protected:
+        float bonus_vechime_functie;
+        int vechime_functie;
+    
+    
+    //Constructor
+    public:
+    
+        //Constructor Gol
+        LiderEchipaProgramare(){}
+        
+        //Constructor cu Lista de Initializare
+        LiderEchipaProgramare(std::string nume, float salariu_baza, std::string functie, float procent_taxe_salariu, float procent_deducere_salariu_it, float bonus_vechime_functie, int vechime_functie): Programator(nume, salariu_baza, functie, procent_taxe_salariu, procent_deducere_salariu_it), bonus_vechime_functie(bonus_vechime_functie), vechime_functie(vechime_functie){}
+    
+    
+    //Functii
+    public:
+
+        //Setters si Getters
+        
+        
+        //Alte Functii
+        void afisare_1(){std::cout<<nume<<"\n"<<functie<<std::endl;}
+        
+        
+        void calcul_salarii_2(){
+            
+            int salariu_brut;
+            int salariu_net;
+            
+            salariu_brut = salariu_baza + 500*vechime_functie;
+            salariu_net =  ((salariu_baza + 500*vechime_functie)*(100-40+10))/100;
+            
+            std::cout<<nume<<std::endl;
+            std::cout<<"Salariu brut: "<< salariu_brut<<std::endl;
+            std::cout<<"Salariu Net: "<< salariu_net<<std::endl;
+            
+        }
+        
+        
+        void marire_salariu_3(float x){
+            
+            int salariu_vechi;
+            int salariu_nou;
+            
+            salariu_vechi=salariu_baza;
+            salariu_nou=salariu_baza+salariu_baza*x/100;
+        
+            std::cout<<nume<<std::endl;
+            std::cout<<"Salariu de baza vechi: "<< salariu_vechi<<std::endl;
+            std::cout<<"Salariu de baza nou: "<< salariu_nou<<std::endl;
+        
+            
+        }
+    
+    
+        //Destructor
+        ~LiderEchipaProgramare(){std::cout<<"Destructor LiderEchipaProgramare"<<std::endl;}
+    
+};
+
+
+// UML PLM CHESTIA ASTA NU FACE NIMIC
+//Clasa Array
+class FirmaProgramare{
+    
+    //Date membre
+    private:
+        Angajat** p_angajati;
+        int numar_angajati;
+        
+    
+    //Constructor
+    public:
+    
+        //Constructor cu Lista de Initializare
+        FirmaProgramare(Angajat angajat[], int numar_angajati): numar_angajati(numar_angajati){
+            
+            int contor=0;
+            
+            this->p_angajati = new Angajat*[numar_angajati];
+            
+            for(int i=0; i<numar_angajati; i++){
+                
+                p_angajati[contor++] = new Angajat();
+            }
+            
+        }
+    
+    //Functii
+    public:
+        
+        void afiseaza_angajati(){}
+        void mareste_salarii(float x, float y, float z){}
+        void promoveaza(std::string x){}
+    
+};
+
+
+
+
+//Functia main
+int main(){
+    
+    
+    //Initializam Date
+    int numar_angajati;
+    std::string nume;
+    std::string functie;
+    int salariu_baza;
+    
+    std::cin>>numar_angajati;
+    
+    //Facem Array de Obiecte (Toate pot sa fie de o clasa diferita)
+        //Folosim Alocare Dinamica
+        
+    Angajat **angajat_array = nullptr;
+    angajat_array = new Angajat *[numar_angajati];
+    
+    
+    int k=0; //Variabila de lucru care pune pe pozitii
+    
+    
+    //Generam fiecare obiect
+    for(int i=0; i<numar_angajati; i++){
+        
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+        std::getline(std::cin, nume);
+        std::cin>>functie;
+        std::cin>>salariu_baza;
+        
+        if(functie == "Analist"){
+            //Punem elementele in obiect
+            *(angajat_array+(k++)) = new Analist(nume, salariu_baza, functie, 0);
+        }
+        
+        if(functie == "Programator"){
+            //Punem elementele in obiect
+            *(angajat_array+(k++)) = new Programator(nume, salariu_baza, functie, 0, 0);
+        }
+        
+        if(functie == "LiderEchipaProgramare"){
+            
+            int vechime_functie;
+            std::cin>>vechime_functie;
+            
+            //Punem elementele in obiect
+            *(angajat_array+(k++)) = new LiderEchipaProgramare(nume, salariu_baza, functie, 0, 0, 0, vechime_functie);
+        }
+        
+    }
+    
+    
+    
+    
+    //Optiuni
+    int optiune;
+    std::cin>>optiune;
+    
+    //Optiune 1
+    if(optiune == 1){
+        
+        for(int i=0; i<numar_angajati; i++){
+            (*(angajat_array+i))->afisare_1();
+        }
+        
+    }
+    
+    
+    //Optiune 2
+    if(optiune == 2){
+        
+        for(int i=0; i<numar_angajati; i++){
+            (*(angajat_array+i))->calcul_salarii_2();
+        }
+ 
+    }
+    
+    
+    //Optiune 3
+    if(optiune == 3){
+        
+        std::string functie_analist;
+        std::string functie_programator;
+        std::string functie_lider;
+        
+        int procent_analist;
+        int procent_programator;
+        int procent_lider;
+        
+        std::cin>>functie_analist;
+        std::cin>>procent_analist;
+        
+        std::cin>>functie_programator;
+        std::cin>>procent_programator;
+        
+        std::cin>>functie_lider;
+        std::cin>>procent_lider;
+        
+        for(int i=0; i<numar_angajati; i++){
+            
+            //Fiecare functie are procent diferit
+            
+            if((*(angajat_array+i))->get_functie() == functie_analist)
+                (*(angajat_array+i))->marire_salariu_3(procent_analist);
+            
+            if((*(angajat_array+i))->get_functie() == functie_programator)
+                (*(angajat_array+i))->marire_salariu_3(procent_programator);
+                
+            if((*(angajat_array+i))->get_functie() == functie_lider)
+                (*(angajat_array+i))->marire_salariu_3(procent_lider);
+        }
+        
+        
+    }
+    
+    
+    //Optiune 4
+    if(optiune == 4){
+        
+        std::string nume_4;
+        std::string functie_4;
+        
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+        std::getline(std::cin, nume_4);
+        std::cin>>functie_4;
+        
+        //Cautam persoana promovata
+        int contor;
+        for(int i=0; i<numar_angajati; i++){
+            if((*(angajat_array+i))->get_nume() == nume_4)
+                contor=i;
+        }
+        
+        
+        //Setam noua functie si apelam DESTRUCTOR
+        delete (*(angajat_array+contor));
+        
+        //Facem obiect nou de noua Functie Promovata in locul celui sters
+        if(functie_4 == "Analist"){
+            //Punem elementele in obiect
+            *(angajat_array+(contor)) = new Analist(nume_4, 0, functie_4, 0);
+        }
+        
+        if(functie_4 == "Programator"){
+            //Punem elementele in obiect
+            *(angajat_array+(contor)) = new Programator(nume_4, 0, functie_4, 0, 0);
+        }
+        
+        if(functie_4 == "LiderEchipaProgramare"){
+            
+            //Punem elementele in obiect
+            *(angajat_array+(contor)) = new LiderEchipaProgramare(nume_4, 0, functie_4, 0, 0, 0, 0);
+        }
+
+    
+        
+        //Afisam angajatii
+        for(int i=0; i<numar_angajati; i++){
+            (*(angajat_array+i))->afisare_1();
+        }    
+        
+        
+        
+        
+    }
+    
+
+    return 0;
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
