@@ -8,39 +8,26 @@
 
 class Cos{
 
-        private:
-    std::string nume;
-    std::string categorie;
-    float pret;
-    float greutate;
-    int buc;
-        public:
-    Cos(){}
+    private:
+            std::string nume;
+            std::string categorie;
+            float pret;
+            float greutate;
+            int buc;
+        
+    public:
+            Cos(){}
 
-    Cos(std::string nume, std::string categorie, float pret, float greutate, int buc):nume(nume), categorie(categorie),
-    pret(pret), greutate(greutate), buc(buc){}
+            Cos(std::string nume, std::string categorie, float pret, float greutate, int buc):nume(nume), categorie(categorie),
+            pret(pret), greutate(greutate), buc(buc){}
 
     //Getter
-
-    std::string get_nume(){
-        return this->nume;
-    }
-    
-
-    std::string get_categorie(){
-        return this->categorie;
-    }
-
-    float get_pret(){
-        return this->pret;
-    }
-
-    float get_greutate(){
-        return this->greutate;
-    }
-
+    std::string get_nume(){return this->nume;}
+    std::string get_categorie(){return this->categorie;}
+    float get_pret(){return this->pret;}
+    float get_greutate(){return this->greutate;}
+        
     void set_buc(int buc){this->buc=buc;}
-
     void set_nume(std::string nume){this->nume=nume;}
 
 
@@ -55,6 +42,10 @@ class Cos{
 
 };
 
+        
+        
+        
+
 
 int main(){
     int n; //nr de produse
@@ -65,19 +56,24 @@ int main(){
     
   
     std::cin>>n;
-    Cos ** cos_array=nullptr;
+    Cos **cos_array=nullptr;
     cos_array= new Cos *[n];
+    
     int k=0;
-    for(int i=0;i<n;i++){
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
-        std::getline(std::cin,nume);
-        std::getline(std::cin,categorie);
-        std::cin>>pret;
-        std::cin>>greutate;
+    
+        for(int i=0;i<n;i++){
+                
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+                
+                std::getline(std::cin,nume);
+                std::getline(std::cin,categorie);
+                std::cin>>pret;
+                std::cin>>greutate;
 
-        *(cos_array+(k++))= new Cos(nume, categorie, pret, greutate, 0);
+                *(cos_array+(k++))= new Cos(nume, categorie, pret, greutate, 0);
         }
 
+        
         int optiune;
         std::cin>>optiune;
 
@@ -89,13 +85,15 @@ int main(){
 
         if(optiune==2){
             int ok=0;
+                
             std::string categorie_cautata;
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
             std::getline(std::cin,categorie_cautata);
+            
             for(int i=0;i<n;i++){
                 if((*(cos_array+i))->get_categorie()==categorie_cautata){
-                    (*(cos_array+i))->afisare();
-                    ok=1;
+                        (*(cos_array+i))->afisare();
+                         ok=1;
                 }
 
             }
@@ -110,20 +108,26 @@ int main(){
             for(int i=0;i<n;i++){
                 int buc=0;
                 for(int j=i;j<n;j++){
-                if(((cos_array+i))->get_nume()==((cos_array+j))->get_nume())
-                {buc++;}
+                        if((*(cos_array+i))->get_nume()==(*(cos_array+j))->get_nume()){
+                                buc++;
+                        }
                 }
                 (*(cos_array+i))->set_buc(buc);
             }
+                
+                
             for(int i=0;i<n;i++){
                 for(int j=i+1;j<n;j++){
-                    if(((cos_array+i))->get_nume()==((cos_array+j))->get_nume())
+                    if((*(cos_array+i))->get_nume()==(*(cos_array+j))->get_nume()){
                         (*(cos_array+j))->set_nume("Nu");
+                    }
                 }
             }
+                
             for(int i=0;i<n;i++){
-                if((*(cos_array+i))->get_nume()!="Nu")
-                    (*(cos_array+i))->afisare2();
+                if((*(cos_array+i))->get_nume()!="Nu"){
+                        (*(cos_array+i))->afisare2();
+                }
             }
 
 
@@ -132,13 +136,16 @@ int main(){
 
         if(optiune==4){
             float greutate_totala=0;
+                
             for(int i=0;i<n;i++){
                 greutate_totala=greutate_totala+(*(cos_array+i))->get_greutate();
             }
+                
             std::cout<<greutate_totala<<std::setprecision(2)<<std::endl;
         }
 
         if(optiune==5){
+                
             float greutate_maxima;
             float pret_suplimentar;
             std::cin>>greutate_maxima;
@@ -147,10 +154,13 @@ int main(){
             float greutate_ramasa=0;
             int calcul_intermediar;
             float greutate_totala=0;
+                
             for(int i=0;i<n;i++){
                 greutate_totala=greutate_totala+(*(cos_array+i))->get_greutate();
             }
+                
             float pret_total=0;
+                
             for(int i=0;i<n;i++){
                 pret_total=pret_total+(*(cos_array+i))->get_pret();
             }
@@ -175,4 +185,4 @@ int main(){
 
 
     return 0;
-}4
+}
