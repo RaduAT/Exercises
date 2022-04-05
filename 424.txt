@@ -1,0 +1,217 @@
+#include <iostream>
+#include <limits>
+#include <string>
+
+//Clasa
+class Profil;
+class Card;
+class Cont_economii;
+
+class Card{
+    
+    friend Profil;
+    
+    //Date membre
+    private:
+        int sold_card;
+        
+    //Constructor
+    public:
+        Card(int sold_card=0):sold_card(sold_card){}
+        
+    //Getter  
+        int get_sold_card(){return sold_card;}
+        
+};
+
+class Cont_economii{
+    
+    friend Profil;
+    
+    //Date membre
+    private:
+        int sold_cont_economii;
+        int dobanda;
+    
+    //Constructor
+    public:
+        Cont_economii(int sold_cont_economii=0, int dobanda=0):sold_cont_economii(sold_cont_economii), dobanda(dobanda){}
+    
+
+};
+
+class Profil{
+    
+    //Declaram Obiectele
+    public:
+    Card card;
+    Cont_economii cont_economii;
+    
+    //Date membre
+    private:
+        std::string nume;
+    
+    //Constructor
+    public:
+        Profil(std::string nume, Card &card, Cont_economii &cont_economii):nume(nume){
+            
+            this->card.sold_card = card.sold_card;
+            this->cont_economii.sold_cont_economii = cont_economii.sold_cont_economii;
+            this->cont_economii.dobanda = cont_economii.dobanda;
+        }
+        
+        
+    //Functii
+    public:
+        void afisare_1(){
+            
+            std::cout<<nume<<"\n";
+            std::cout<<"card_bancar"<<"\n";
+            std::cout<<card.sold_card<<"\n";
+            std::cout<<"cont_economii"<<"\n";
+            std::cout<<cont_economii.sold_cont_economii<<"\n";
+            std::cout<<cont_economii.dobanda<<"\n";
+            
+            
+        }
+    
+        void afisare_2(float bani_2){
+            
+            float suma_2;
+            suma_2 = card.sold_card+bani_2;
+            
+            std::cout<<"card_bancar"<<"\n";
+            
+            if(suma_2>0){std::cout<<suma_2<<"\n";}
+            else std::cout<<"EROARE: depunere suma negativa"<<"\n";
+        }
+        
+        
+        void afisare_3(float bani_3){
+            
+            float suma_3;
+            suma_3 = card.sold_card-bani_3;
+            
+            std::cout<<"cont_economii"<<"\n";
+            
+            if(suma_3>0){std::cout<<suma_3<<"\n";}
+            else std::cout<<"EROARE: fonduri insuficiente"<<"\n";
+            
+        }
+        
+        
+        void afisare_4(float bani_4){
+            
+            float suma_41;
+            float suma_42;
+
+            suma_41 = (card.sold_card-bani_4);
+            suma_42 = (cont_economii.sold_cont_economii+bani_4)*((100.0+cont_economii.dobanda)/100.0);
+            
+            
+            
+            std::cout<<"card_bancar"<<"\n";
+            if(suma_41>0){std::cout<<suma_41<<"\n";}
+            else std::cout<<"EROARE: fonduri insuficiente"<<"\n";
+            
+            
+            std::cout<<"cont_economii"<<"\n";
+            if(suma_42>0){std::cout<<suma_42<<"\n";}
+            else std::cout<<"EROARE: fonduri insuficiente"<<"\n";
+            
+            std::cout<<cont_economii.dobanda<<"\n";
+            
+        }
+        
+        void afisare_5(float bani_5){
+            
+            float suma_5=cont_economii.sold_cont_economii;
+            
+            for(int i=1; ;i++){
+                
+                suma_5 = suma_5*((100.0+cont_economii.dobanda)/100.0);
+                
+                if(suma_5>bani_5){
+                    std::cout<<i;
+                    break;
+                }
+                
+                else
+                    continue;
+            }
+ 
+        }
+
+};
+
+//Functia main
+int main(){
+    
+    //Initializam Date
+    std::string p_nume;
+    int c_sold;
+    int ce_sold;
+    int ce_dobanda;
+    
+    int optiune;
+    
+    //Citim Date
+
+    std::getline(std::cin, p_nume);
+ 
+    std::cin>>c_sold;
+    std::cin>>ce_sold;
+    std::cin>>ce_dobanda;
+    
+    //Initializam Obiecte
+    Card c(c_sold);
+    Cont_economii ce(ce_sold, ce_dobanda);
+    Profil p(p_nume, c, ce);
+    
+    std::cin>>optiune;
+    
+    //Optiuni
+    if(optiune == 1){
+        
+        p.afisare_1();
+      
+    }
+    
+    if(optiune == 2){
+        
+        float bani_2;
+        std::cin>>bani_2;
+        p.afisare_2(bani_2);
+        
+    }
+    
+    if(optiune == 3){
+        
+        float bani_3;
+        std::cin>>bani_3;
+        p.afisare_3(bani_3);
+        
+        
+    }
+    
+    if(optiune == 4){
+        
+        float bani_4;
+        std::cin>>bani_4;
+        p.afisare_4(bani_4);
+        
+    }
+    
+    if(optiune == 5){
+        
+        float bani_5;
+        std::cin>>bani_5;
+        p.afisare_5(bani_5);
+        
+    }
+    
+    
+    return 0;
+    
+    
+}

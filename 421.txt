@@ -1,0 +1,264 @@
+#include <iostream>
+#include <limits>
+#include <string>
+#include <algorithm>
+#include <stdio.h>
+#include <stdlib.h>
+
+
+//Clasa
+class Caseta;
+
+class Caseta{
+    
+    //Date membre
+    private:
+        int x1;
+        int x2;
+        int y1;
+        int y2;
+        std::string eticheta;
+        
+        int arie;
+        
+    
+    //Constructor
+    public:
+        Caseta(int x1, int x2, int y1, int y2, std::string eticheta): x1(x1), x2(x2), y1(y1), y2(y2), eticheta(eticheta){
+            
+            arie=(x2-x1+1)*(y2-y1+1);
+        } 
+    
+    //Getter
+    public:
+        int get_x1(){return x1;}
+        int get_x2(){return x2;}
+        int get_y1(){return y1;}
+        int get_y2(){return y2;}
+        std::string get_eticheta(){return eticheta;}
+        int get_arie(){return arie;}
+    
+    
+    
+    //Functii
+    public:
+        void afisare1(){
+            std::cout<<x1<<" "<<x2<<" "<<y1<<" "<<y2<<"\n"; 
+            std::cout<<eticheta<<"\n";
+        }
+        
+};
+
+
+//Functia main
+int main(){
+
+    //Initializam Date
+    int c_x1;
+    int c_x2;
+    int c_y1;
+    int c_y2;
+    std::string c_eticheta;
+    
+    int n;
+    int optiune;
+    
+
+    
+    std::cin>>n;
+    
+    //Alocare Dinamica Vector
+    Caseta **caseta_array = nullptr;
+    caseta_array = new Caseta*[n];
+    
+    
+    //Initializam Obiecte
+    for(int i=0; i<n; i++){
+        
+        //Citim Date
+        std::cin>>c_x1;
+        std::cin>>c_x2;
+        std::cin>>c_y1;
+        std::cin>>c_y2;
+    
+        std::cin>>c_eticheta;        
+        
+        *(caseta_array + i) = new Caseta(c_x1, c_x2, c_y1, c_y2, c_eticheta);
+        
+        
+    }
+    
+    std::cin>>optiune;
+    
+    if(optiune == 1){
+        
+        for(int i=0; i<n; i++){
+            
+            (*(caseta_array + i))->afisare1();
+            
+        }
+        
+    }
+    
+    if(optiune == 2){
+        
+        //Citim obiect nou
+        int nou_x1;
+        int nou_x2;
+        int nou_y1;
+        int nou_y2;
+        std::string nou_eticheta;
+        
+        //Maxim si minim
+        int max_x1;
+        int min_x2;
+        int max_y1;
+        int min_y2;
+        
+        //Lungimi
+        int lungime;
+        int latime;
+        
+        std::cin>>nou_x1;
+        std::cin>>nou_x2;
+        std::cin>>nou_y1;
+        std::cin>>nou_y2;
+        std::cin>>nou_eticheta;
+    
+        (*(caseta_array + (n))) = new Caseta(nou_x1, nou_x2, nou_y1, nou_y2, nou_eticheta);
+        
+        //2 stelute pentru valori
+        max_x1 = std::max((*(caseta_array + (0)))->get_x1(), (*(caseta_array + (n)))->get_x1());
+        min_x2 = std::min((*(caseta_array + (0)))->get_x2(), (*(caseta_array + (n)))->get_x2());
+        max_y1 = std::max((*(caseta_array + (0)))->get_y1(), (*(caseta_array + (n)))->get_y1());
+        min_y2 = std::min((*(caseta_array + (0)))->get_y2(), (*(caseta_array + (n)))->get_y2());
+       
+       //Intersectie
+       latime=min_x2-max_x1+1;
+       lungime=min_y2-max_y1+1;
+       
+       
+       //IOU
+       float iou;
+       
+       iou=(float)(latime*lungime)/((*(caseta_array + (0)))->get_arie()+(*(caseta_array + (n)))->get_arie()-latime*lungime);
+       printf("%.4f", iou);
+       
+    }
+    
+    if(optiune == 3){
+        
+        //Citim obiect nou
+        int nou_x1;
+        int nou_x2;
+        int nou_y1;
+        int nou_y2;
+        std::string nou_eticheta;
+        
+        float prag;       //PRAG
+        
+        //Maxim si minim
+        int max_x1;
+        int min_x2;
+        int max_y1;
+        int min_y2;
+        
+        //Lungimi
+        int lungime;
+        int latime;
+        
+        std::cin>>nou_x1;
+        std::cin>>nou_x2;
+        std::cin>>nou_y1;
+        std::cin>>nou_y2;
+        std::cin>>nou_eticheta;
+    
+        std::cin>>prag;
+        
+        (*(caseta_array + (n))) = new Caseta(nou_x1, nou_x2, nou_y1, nou_y2, nou_eticheta);
+        
+        //2 stelute pentru valori
+        max_x1 = std::max((*(caseta_array + (0)))->get_x1(), (*(caseta_array + (n)))->get_x1());
+        min_x2 = std::min((*(caseta_array + (0)))->get_x2(), (*(caseta_array + (n)))->get_x2());
+        max_y1 = std::max((*(caseta_array + (0)))->get_y1(), (*(caseta_array + (n)))->get_y1());
+        min_y2 = std::min((*(caseta_array + (0)))->get_y2(), (*(caseta_array + (n)))->get_y2());
+       
+       //Intersectie
+       latime=min_x2-max_x1+1;
+       lungime=min_y2-max_y1+1;
+       
+       
+       //IOU
+       float iou;
+       
+       iou=(float)(latime*lungime)/((*(caseta_array + (0)))->get_arie()+(*(caseta_array + (n)))->get_arie()-latime*lungime);
+        printf("%.4f\n", iou);
+        
+        if(iou<prag)
+            std::cout<<"0";
+        else if(iou>prag && ((*(caseta_array + (0)))->get_eticheta() == (*(caseta_array + (0)))->get_eticheta()))
+            std::cout<<"1";
+        else
+            std::cout<<"0";
+    }
+    
+    if(optiune == 4){
+        
+        //Citim obiect nou
+        int nou_x1;
+        int nou_x2;
+        int nou_y1;
+        int nou_y2;
+        std::string nou_eticheta;
+        
+        float prag;       //PRAG
+        
+        //Maxim si minim
+        int max_x1;
+        int min_x2;
+        int max_y1;
+        int min_y2;
+        
+        //Lungimi
+        int lungime;
+        int latime;
+        
+        std::cin>>nou_x1;
+        std::cin>>nou_x2;
+        std::cin>>nou_y1;
+        std::cin>>nou_y2;
+        std::cin>>nou_eticheta;
+    
+        std::cin>>prag;
+        
+        (*(caseta_array + (n))) = new Caseta(nou_x1, nou_x2, nou_y1, nou_y2, nou_eticheta);
+        
+        //2 stelute pentru valori
+        max_x1 = std::max((*(caseta_array + (0)))->get_x1(), (*(caseta_array + (n)))->get_x1());
+        min_x2 = std::min((*(caseta_array + (0)))->get_x2(), (*(caseta_array + (n)))->get_x2());
+        max_y1 = std::max((*(caseta_array + (0)))->get_y1(), (*(caseta_array + (n)))->get_y1());
+        min_y2 = std::min((*(caseta_array + (0)))->get_y2(), (*(caseta_array + (n)))->get_y2());
+       
+       //Intersectie
+       latime=min_x2-max_x1+1;
+       lungime=min_y2-max_y1+1;
+       
+       
+       //IOU
+       float iou;
+       
+       iou=(float)(latime*lungime)/((*(caseta_array + (0)))->get_arie()+(*(caseta_array + (n)))->get_arie()-latime*lungime);
+       
+       
+        
+        
+        
+        
+    }
+    
+    
+    
+    return 0;
+    
+    
+}
